@@ -22,6 +22,7 @@ class Renderer{
       document.write("</div>");
       this.wrapper = document.getElementById("wrapper");
       this.ctx = document.getElementById("riasBaixasCanvas").getContext("2d");
+      window.canvas = document.getElementById("riasBaixasCanvas")
       this.frameCount = 0
       this.renderElements = []
     }
@@ -72,7 +73,7 @@ class Renderer{
         this.renderElements[i].positionX + this.renderElements[i].width > (this.camera.positionX)) &&
         ((this.camera.positionY+ this.height) > this.renderElements[i].positionY  &&
         this.renderElements[i].positionY + this.renderElements[i].height  > (this.camera.positionY)) )
-          this.ctx.drawImage(this.renderElements[i].image, this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].image.width, this.renderElements[i].image.height);
+          this.ctx.drawImage(this.renderElements[i].image, this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].width, this.renderElements[i].height);
         }
         else if (((this.camera.positionX + this.width) > this.renderElements[i].positionX  &&
           this.renderElements[i].positionX + this.renderElements[i].width > (this.camera.positionX)) &&

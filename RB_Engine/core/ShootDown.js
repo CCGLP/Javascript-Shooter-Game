@@ -20,26 +20,81 @@ class Bullet extends Sprite{
       this.remove()
     }
 
+      for (var i = 0; i < chunks.length; i++){
+          if (checkCollisionBetweenSprites(this, chunks[i])){
+              console.log("HIHI")
+              chunks[i].damageDone()
+              this.remove()
+          }
+      }
+      
   }
 
 }
 
+
+class Chunk extends Sprite{
+    constructor(spriteImage, renderOrder = 0){
+        var size = GetRandomNumberBetween(20,50);
+        var positionX = GetRandomNumberBetween(size, widthScreen-size)
+        var positionY = GetRandomNumberBetween(size, size*3)
+        
+        super(size, size, positionX, -positionY, spriteImage, renderOrder);
+        var targetPos = new Vector2(GetRandomNumberBetween(0,widthScreen),heightScreen)
+        var position = new Vector2(positionX, positionY)
+        var normalizedSpeed = targetPos.getDirectionFrom(position)
+        normalizedSpeed.normalize()
+        
+        normalizedSpeed.multiplierScalar(GetRandomNumberBetween(1, 2))
+        this.speed = normalizedSpeed
+    }
+    
+    damageDone(){
+        this.width -= 2;
+        this.height -= 2;
+        if (this.width < 10){
+            for (var i = 0; i< chunks.length; i++){
+                if (chunks[i] == this){
+                    chunks.splice(i,1);
+                    break;
+                }
+            }
+            this.remove();
+            
+        }
+    }
+    
+}
+
+
+
+var shootPoint = new Vector2(300,550)
+
 function pepe (){
      var bull = new Bullet(4,4, 120, 120, "cuadradito.png",0, widthScreen, heightScreen)
-     bull.speedY = 3;
+     bull.speedByFrame(3,3)
     window.requestAnimationFrame(pepe)
 }
+
+
 var widthScreen = 600;
 var heightScreen = 600;
 
-var engine = new Engine(widthScreen, heightScreen)
 
+var engine = new Engine(widthScreen, heightScreen)
 engine.start()
+
+
 var textPause = new TextSprite("PAUSE", 3000, 3000, 0, "white")
+
+var chunks = []
+for (var i = 0; i < 10; i++){
+    chunks[i] = new Chunk("cuadradito.png")
+}
 
 var ESC = false
 
-window.requestAnimationFrame(pepe)
+//window.requestAnimationFrame(pepe)
 
 document.addEventListener('keydown', function(event) {
   if (!ESC){
@@ -70,3 +125,16 @@ document.addEventListener('keydown', function(event) {
         }
       }
 });
+
+
+window.canvas.addEventListener('click', function(evt){
+    var mouseP = getMousePos(window.canvas, evt)
+    
+    var bullet = new Bullet(4,4,shootPoint.x, shootPoint.y, "cuadradito.png", 0, widthScreen, heightScreen)
+    var vectorNor = mouseP.getDirectionFrom(shootPoint)
+    vectorNor.normalize()
+    vectorNor.multiplierScalar(5)
+    bullet.speed = vectorNor
+  
+    
+},false)
