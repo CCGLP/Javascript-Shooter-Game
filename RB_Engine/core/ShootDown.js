@@ -48,7 +48,12 @@ class Chunk extends Sprite{
         normalizedSpeed.multiplierScalar(GetRandomNumberBetween(1, 2))
         this.speed = normalizedSpeed
     }
-    
+    tick(){
+        super.tick();
+        this.rotation += 44; 
+        if (this.rotation > 360)
+            this.rotation/= 360
+    }
     damageDone(){
         this.width -= 2;
         this.height -= 2;
@@ -90,6 +95,7 @@ var textPause = new TextSprite("PAUSE", 3000, 3000, 0, "white")
 var chunks = []
 for (var i = 0; i < 10; i++){
     chunks[i] = new Chunk("cuadradito.png")
+    chunks[i].rotation = 40
 }
 
 var ESC = false
