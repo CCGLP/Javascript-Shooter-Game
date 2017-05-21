@@ -15,6 +15,7 @@ class Sprite extends GameObject{
     this.positionX = positionX;
     this.positionY = positionY;
     this.speed = new Vector2(0,0)
+    this.rotation = 0; 
 
   }
 
@@ -22,7 +23,7 @@ class Sprite extends GameObject{
     this.speed.x = speedX;
     this.speed.y = speedY; 
   }
-
+    
   tick(){
     super.tick()
     this.positionX += this.speed.x
