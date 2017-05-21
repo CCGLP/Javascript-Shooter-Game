@@ -1,7 +1,13 @@
-class Engine{
+class Input{
 
   constructor(){
-      window.input = this;
+      if (window.input == null){
+          window.input = this;
+        
+      }
+      else{
+          return window.input; 
+      }
 
 
 

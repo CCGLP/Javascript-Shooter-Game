@@ -20,6 +20,22 @@ class Update{
     }
   }
 
+  clearObject(upd){
+      for (var i = 0; i< window.update.gameObjectTicks.length; i++){
+          if (upd == window.update.gameObjectTicks[i]){
+              delete window.update.gameObjectTicks[i];
+              window.update.gameObjectTicks.splice(i,1);
+              break; 
+          }
+      }
+  }
+    
+  clearAllObjects(){
+      for (var i = 0; i < window.update.gameObjectTicks.length; i++){
+        delete window.update.gameObjectTicks[i];
+      }
+      window.update.gameObjectTicks = [];
+  }
   startUpdate(){
     this.updaterutine = setInterval(this.update, 1000/60)
   }

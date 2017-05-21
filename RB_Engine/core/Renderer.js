@@ -92,6 +92,24 @@ class Renderer{
 
   }
 
+    
+    clearAllRenders(){
+        for (var i = 0; i < this.renderElements.length; i++){
+            delete this.renderElements[i]
+        }
+        this.renderElements = []
+    }
+    
+    clearRender(rend){
+        for (var i = 0; i < this.renderElements.length;i++){
+            if (rend == this.renderElements[i]){
+                delete this.renderElements[i]
+                this.renderElements.splice(i,1)
+                break;
+            }
+            
+        }
+    }
 
   tick(){
      window.renderer.ctx.save()

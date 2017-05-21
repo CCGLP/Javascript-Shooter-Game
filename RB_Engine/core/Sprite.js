@@ -29,6 +29,12 @@ class Sprite extends GameObject{
     this.positionX += this.speedX
     this.positionY += this.speedY;
   }
+    
+  remove(){
+      super.remove(); 
+      window.renderer.clearRender(this)
+      delete this
+  }
 
   // anims needs to be an array of strings with the images timeBetween in ms
   addAnimation(anims,timeBetween = 1, loop = true){

@@ -42,12 +42,15 @@ document.addEventListener('keydown', function(event) {
     if (event.keyCode == 37){
       snake.speedX = -3
       KEYUPLEFT = true
+      snake.remove()
     }
     else if (event.keyCode == 38){
       snake.speedY = -3
       KEYUPUP= true
     }
     else if (event.keyCode == 39){
+      //window.update.clearAllObjects();
+     // window.renderer.clearAllRenders();
       snake.speedX = 3
       KEYUPRIGHT = true
     }
