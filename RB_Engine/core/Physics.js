@@ -1,43 +1,26 @@
-class Physics{
-  constructor(){
-    if (window.physics == null){
-      this.physicsTicks = []
-      this.gravity = 0.98;
+class Physics extends GameObject{
 
+    constructor(gravity = 10,canSleep= true, scalePixelUnit = 30){
+       
+        if (window.physics == null){
+            super()
+            this.world = new b2World(new b2Vec2(0, gravity), canSleep)
+            window.SCALEPHYSICS = scalePixelUnit; 
+            window.physics = this; 
+        }
+        else{
+            return window.physics;
+        }
+            
     }
-    else{
-      return window.physics;
+    
+    createBody(body,fix){
+        var aux = this.world.CreateBody(body).CreateFixture(fix);
+        return aux.GetBody();
     }
-  }
-
-  getGravity(){
-    return this.gravity;
-  }
-
-  addPhysicTick(tick){
-    this.physicsTicks[this.physicsTicks.length] = tick;
-  }
-
-  tick(){
-    for (var i = 0; i < this.physicsTicks.length; i++){
-      this.physicsTicks[i]();
+    tick(){
+        super.tick();
+        this.world.Step(1 / 60, 10, 10);
+        this.world.ClearForces();
     }
-  }
-
-}
-
-class PhysicSprite extends Sprite{
-  constructor(width,height,positionX = 0, positionY = 0, spriteImage, renderOrder = 0){
-    super(width,height,positionX,positionY,spriteImage, renderOrder);
-    window.physics.addPhysicTick(this.physicTick.bind(this))
-  }
-
-  tick(){
-    super.tick()
-  }
-
-  physicTick(){
-
-  }
-
 }

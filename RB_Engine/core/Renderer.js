@@ -98,7 +98,8 @@ class Renderer{
         this.ctx.save();
         this.ctx.translate(image.positionX, image.positionY);
         this.ctx.translate(image.width /2, image.height/2)
-        this.ctx.rotate(image.rotation*Math.PI/180);
+        this.ctx.scale(0.8, 0.8)
+        this.ctx.rotate(image.rotation*(Math.PI/180));
         this.ctx.drawImage(image.image,-image.width/2,-image.width/2);
         this.ctx.restore();
     } 

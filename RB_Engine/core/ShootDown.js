@@ -27,7 +27,7 @@ class Bullet extends Sprite{
               this.remove()
           }
       }
-      
+
   }
 
 }
@@ -38,21 +38,19 @@ class Chunk extends Sprite{
         var size = GetRandomNumberBetween(20,50);
         var positionX = GetRandomNumberBetween(size, widthScreen-size)
         var positionY = GetRandomNumberBetween(size, size*3)
-        
+
         super(size, size, positionX, -positionY, spriteImage, renderOrder);
         var targetPos = new Vector2(GetRandomNumberBetween(0,widthScreen),heightScreen)
         var position = new Vector2(positionX, positionY)
         var normalizedSpeed = targetPos.getDirectionFrom(position)
         normalizedSpeed.normalize()
-        
+
         normalizedSpeed.multiplierScalar(GetRandomNumberBetween(1, 2))
         this.speed = normalizedSpeed
     }
     tick(){
         super.tick();
-        this.rotation += 44; 
-        if (this.rotation > 360)
-            this.rotation/= 360
+    
     }
     damageDone(){
         this.width -= 2;
@@ -65,10 +63,10 @@ class Chunk extends Sprite{
                 }
             }
             this.remove();
-            
+
         }
     }
-    
+
 }
 
 
@@ -86,16 +84,33 @@ var widthScreen = 600;
 var heightScreen = 600;
 
 
+
+
 var engine = new Engine(widthScreen, heightScreen)
 engine.start()
 
-
+var popi = new PhysicSprite(50,50, 90,100, "cuadradito.png", false, 6)
+var popi = new PhysicSprite(50,50, 20,100, "cuadradito.png", false, 6)
+var popi = new PhysicSprite(50,50, 180,100, "cuadradito.png", false, 6)
+var popi = new PhysicSprite(50,50, 250,100, "cuadradito.png", false, 6)
+var popi = new PhysicSprite(50,50, 400,100, "cuadradito.png", false, 6)
+var popi = new PhysicSprite(50,50, 550,600, "cuadradito.png", false, 6)
+var ground = new PhysicSprite(600, 300, 0, 300, "cuadradito.png", true, 0)
+//var gund = new PhysicSprite(10, 600, 0, 0, "cuadradito.png", true, 0)
 var textPause = new TextSprite("PAUSE", 3000, 3000, 0, "white")
 
 var chunks = []
 for (var i = 0; i < 10; i++){
     chunks[i] = new Chunk("cuadradito.png")
-    chunks[i].rotation = 40
+    
+    if (i == 4){
+        chunks[i].rotation = 40
+        var o = chunks[i]
+        setInterval(function(){
+            o.rotation += 0.5
+        }, 1000/60)
+    }
+  //  chunks[i].rotation = 40
 }
 
 var ESC = false
@@ -106,18 +121,18 @@ document.addEventListener('keydown', function(event) {
   if (!ESC){
 
     if (event.keyCode == 37){ //LEFT
-     
+
     }
     else if (event.keyCode == 38){ //UP
      var bull = new Bullet(4,4, 120, 120, "cuadradito.png",0, widthScreen, heightScreen)
-     bull.speedY = 2; 
+     bull.speedY = 2;
 
     }
     else if (event.keyCode == 39){ // RIGHT
-     
+
     }
     else if (event.keyCode == 40){ //DOWN
-    
+
     }
     }
      if (event.keyCode == 27){
@@ -135,12 +150,12 @@ document.addEventListener('keydown', function(event) {
 
 window.canvas.addEventListener('click', function(evt){
     var mouseP = getMousePos(window.canvas, evt)
-    
+
     var bullet = new Bullet(4,4,shootPoint.x, shootPoint.y, "cuadradito.png", 0, widthScreen, heightScreen)
     var vectorNor = mouseP.getDirectionFrom(shootPoint)
     vectorNor.normalize()
     vectorNor.multiplierScalar(5)
     bullet.speed = vectorNor
-  
-    
+
+
 },false)
