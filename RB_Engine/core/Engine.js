@@ -11,7 +11,7 @@ class Engine{
     renderer.startRender();
     renderer.setBackgroundColor("#000000")
     var update =  new Update()
-    var physics = new Physics()
+    var physics = new Physics(0)
     var audioHandler = new AudioHandler()
     update.startUpdate()
 

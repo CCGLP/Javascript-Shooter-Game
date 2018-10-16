@@ -1,12 +1,14 @@
 class Sprite extends GameObject{
-  constructor(width,height,positionX, positionY, spriteImage, renderOrder = 0){
+  constructor(width,height,positionX, positionY, spriteImage, widthImage, heightImage, renderOrder = 0, tilePositionX = 0, tilePositionY = 0){
     super()
-    this.image = new Image(width, height)
+    this.image = new Image()
     this.image.src = spriteImage
     this.width = width;
     this.height = height;
-   // this.image.width = width;
-    //this.image.height = height;
+    this.sx = tilePositionX; 
+    this.sy = tilePositionY;
+    this.widthTile = widthImage
+    this.heightTile = heightImage
     this.anims = [this.image]
     this.animsArray = [];
     this.numberOfAnimations = 0

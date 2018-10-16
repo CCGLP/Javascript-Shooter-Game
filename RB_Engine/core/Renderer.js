@@ -32,10 +32,6 @@ class Renderer{
 
   }
 
-  print(){
-    console.log(this.image);
-
-  }
 
   addNewElementToRender(sprite){
     var order = sprite.renderOrder
@@ -74,7 +70,9 @@ class Renderer{
         ((this.camera.positionY+ this.height) > this.renderElements[i].positionY  &&
         this.renderElements[i].positionY + this.renderElements[i].height  > (this.camera.positionY))) {
           if (this.renderElements[i].rotation == 0){
-             this.ctx.drawImage(this.renderElements[i].image, this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].width, this.renderElements[i].height);
+            
+             this.ctx.drawImage(this.renderElements[i].image,this.renderElements[i].sx, this.renderElements[i].sy, this.renderElements[i].widthTile, this.renderElements[i].heightTile
+                                , this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].width, this.renderElements[i].height);
           }
           else{
               this.renderRotate(this.renderElements[i])
@@ -94,13 +92,13 @@ class Renderer{
   }
 
     renderRotate(image){
-       // this.cleanScreen()
         this.ctx.save();
         this.ctx.translate(image.positionX, image.positionY);
-        this.ctx.translate(image.width /2, image.height/2)
-        this.ctx.scale(0.8, 0.8)
+        this.ctx.translate(image.width/2 , image.height/2)
+
         this.ctx.rotate(image.rotation*(Math.PI/180));
-        this.ctx.drawImage(image.image,-image.width/2,-image.width/2);
+      
+        this.ctx.drawImage(image.image,image.sx, image.sy, image.widthTile, image.heightTile, -image.width/2,-image.height/2, image.width, image.height)
         this.ctx.restore();
     } 
     
@@ -136,6 +134,7 @@ class Renderer{
      window.renderer.cleanScreen();
      window.renderer.renderAll();
      window.renderer.ctx.restore();
+
 
   }
 
