@@ -5,8 +5,8 @@ class Sprite extends GameObject{
     this.image.src = spriteImage
     this.width = width;
     this.height = height;
-    this.image.width = width;
-    this.image.height = height;
+   // this.image.width = width;
+    //this.image.height = height;
     this.anims = [this.image]
     this.animsArray = [];
     this.numberOfAnimations = 0
@@ -14,20 +14,26 @@ class Sprite extends GameObject{
     window.renderer.addNewElementToRender(this);
     this.positionX = positionX;
     this.positionY = positionY;
-    this.speedX = 0;
-    this.speedY = 0;
+    this.speed = new Vector2(0,0)
+    this.rotation = 0; 
 
   }
 
   speedByFrame(speedX, speedY){
-    this.speedX = speedX;
-    this.speedY = speedY;
+    this.speed.x = speedX;
+    this.speed.y = speedY; 
   }
-
+    
   tick(){
     super.tick()
-    this.positionX += this.speedX
-    this.positionY += this.speedY;
+    this.positionX += this.speed.x
+    this.positionY += this.speed.y
+  }
+    
+  remove(){
+      super.remove(); 
+      window.renderer.clearRender(this)
+      delete this
   }
 
   // anims needs to be an array of strings with the images timeBetween in ms

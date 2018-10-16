@@ -22,6 +22,7 @@ class Renderer{
       document.write("</div>");
       this.wrapper = document.getElementById("wrapper");
       this.ctx = document.getElementById("riasBaixasCanvas").getContext("2d");
+      window.canvas = document.getElementById("riasBaixasCanvas")
       this.frameCount = 0
       this.renderElements = []
     }
@@ -71,8 +72,14 @@ class Renderer{
       if (((this.camera.positionX + this.width) > this.renderElements[i].positionX  &&
         this.renderElements[i].positionX + this.renderElements[i].width > (this.camera.positionX)) &&
         ((this.camera.positionY+ this.height) > this.renderElements[i].positionY  &&
-        this.renderElements[i].positionY + this.renderElements[i].height  > (this.camera.positionY)) )
-          this.ctx.drawImage(this.renderElements[i].image, this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].image.width, this.renderElements[i].image.height);
+        this.renderElements[i].positionY + this.renderElements[i].height  > (this.camera.positionY))) {
+          if (this.renderElements[i].rotation == 0){
+             this.ctx.drawImage(this.renderElements[i].image, this.renderElements[i].positionX, this.renderElements[i].positionY,this.renderElements[i].width, this.renderElements[i].height);
+          }
+          else{
+              this.renderRotate(this.renderElements[i])
+          }
+      }
         }
         else if (((this.camera.positionX + this.width) > this.renderElements[i].positionX  &&
           this.renderElements[i].positionX + this.renderElements[i].width > (this.camera.positionX)) &&
@@ -86,12 +93,41 @@ class Renderer{
 
   }
 
+    renderRotate(image){
+       // this.cleanScreen()
+        this.ctx.save();
+        this.ctx.translate(image.positionX, image.positionY);
+        this.ctx.translate(image.width /2, image.height/2)
+        this.ctx.scale(0.8, 0.8)
+        this.ctx.rotate(image.rotation*(Math.PI/180));
+        this.ctx.drawImage(image.image,-image.width/2,-image.width/2);
+        this.ctx.restore();
+    } 
+    
    setBackgroundColor(color) {
     this.color = color;
     this.ctx.fillStyle = color;
 
   }
 
+    
+    clearAllRenders(){
+        for (var i = 0; i < this.renderElements.length; i++){
+            delete this.renderElements[i]
+        }
+        this.renderElements = []
+    }
+    
+    clearRender(rend){
+        for (var i = 0; i < this.renderElements.length;i++){
+            if (rend == this.renderElements[i]){
+                delete this.renderElements[i]
+                this.renderElements.splice(i,1)
+                break;
+            }
+            
+        }
+    }
 
   tick(){
      window.renderer.ctx.save()
